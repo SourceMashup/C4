@@ -1,0 +1,13 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteRule ^_config/_assets  - [L]
+
+
+RewriteCond %{REQUEST_URI} ^/_.*
+RewriteRule .* index.php [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [QSA,L]
+

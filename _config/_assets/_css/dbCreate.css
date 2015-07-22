@@ -1,0 +1,157 @@
+@font-face {
+	font-family: adminopensans;
+	src: url('/_config/_assets/_fonts/OpenSans-Light.ttf');
+}
+body{
+	background-color: #FF422B;
+	font-size: 16px;
+	font-family: adminopensans;
+	font-weight: 100;
+	color:white;
+}
+
+input{
+	color: rgba(255, 255, 255, 0.84);
+	background-color: rgba(0, 0, 0, 0.06);
+	font-weight: 600;
+	font-family: adminopensans;
+	border: none;
+	font-size: 1.4em;
+	padding: 0.1em;
+	width: 100%;
+	margin: 0.3em 0em;
+
+}
+
+input[type="submit"],a{
+	background: white;
+	color: #FF422B;
+	border-radius: 5px;
+	font-size: 2em;
+	font-weight: 100;
+	cursor: pointer;
+	transition: all .2s;
+}
+
+a{
+	text-decoration: none;
+	padding: 2px 20px;
+	font-size: 1.3em;
+}
+
+input[type="submit"]:hover,
+a:hover{
+	background-color: #EEE;
+	transition: all .2s;
+}
+
+msg{
+	background: white;
+	color: #FF422B;
+	border-radius: 5px;
+	padding: 0.2em;
+	display: block;
+	text-align: center;
+	font-size: 1.2em;
+	margin: 2em 0;
+}
+
+strong{
+	font-weight: 600;
+}
+
+msg > more {
+	display: none;
+	font-size: 0.7em;
+}
+
+msg > span{
+	background-image: url('/_config/_assets/_images/droparrow.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 15px;
+	display: block;
+	height: 15px;
+	width: 15px;
+	margin: auto;
+}
+
+msg:hover > more{
+	display: block;
+}
+
+msg:hover > span{
+	display: none;
+}
+
+#message{
+	display: table;
+	height: 100%;
+	width: 500px;
+	margin: auto;
+}
+
+#message > div{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#heading{
+	display: table;
+}
+
+#heading > span{
+	background-image: url('/_config/_assets/_images/database.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 140px;
+	display: table-cell;
+	height: 140px;
+	width: 150px;
+}
+
+#heading > h1{
+	display: table-cell;
+	font-size: 3em;
+	vertical-align: middle;
+	margin: 0px;
+	padding: 0px;
+	line-height: 1em;
+}
+
+::-webkit-input-placeholder {
+   color: rgba(255, 255, 255, 0.31);
+   font-weight: 100;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: rgba(255, 255, 255, 0.31);
+   font-weight: 100;
+
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(255, 255, 255, 0.31); 
+   font-weight: 100;
+
+}
+
+:-ms-input-placeholder {  
+   color: rgba(255, 255, 255, 0.31);  
+   font-weight: 100;
+
+}
+
+h4{
+	font-size: 1.4em;
+	margin:.1em 0 0 0;
+	padding:0;
+	font-weight: 100;
+}
+
+form{
+	width:400px;
+	margin: auto;
+
+}
