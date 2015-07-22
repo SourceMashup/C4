@@ -11,6 +11,7 @@
 		private $_page;
 		public $content;
 		public $data;
+		public $url;
 		
 		function __construct($root)
 		{
@@ -40,6 +41,7 @@
 
 		public function validateWebURL($url)
 		{
+			$this->url = $url;
 			if($url == "/dbCreate.php")
 			{
 				if(file_exists($this->_root . DIRECTORY_SEPARATOR . "_config" . DIRECTORY_SEPARATOR . "_config.php")){
@@ -50,26 +52,24 @@
 				}
 			}
 			$URL_TABLE = "URLS";
-			/*if($url == $this->config->admin_url)
-			{
-				$this->page = "admin";
-				return true;
-			}*/
-
+			$temp_file = basename($url);
+			$temp_file = rtrim($temp_file,"/");
 			$result = $this->_dbConn->query("SELECT * FROM " . $URL_TABLE . " WHERE URL = '" . $url . "' OR REFERENCE_URL = '" . $url . "' LIMIT 1;");
 			if($result && $result->num_rows > 0)
 			{
-				$this->_page = $result->fetch_object();
+
+				$temp_page = $result->fetch_object();
+				if(!empty($temp_page->REDIRECT_URL))
+				{
+					$url = $temp_page->REDIRECT_URL;
+					return $this->validateWebURL($url);
+				}
+				if(empty($temp_page->FILE))
+					$this->_page = $temp_file;
+				else
+					$this->_page = $temp_page;
 				return true;
 			}else{
-				/*foreach ($this->posts as $post) {
-					if($url == $post->url){
-						$this->page = $post;
-						return true;
-					}
-
-
-				}*/
 				return false;
 			
 			}
@@ -91,7 +91,10 @@
 			{
 				while($row = $result->fetch_object())
 				{
-					$this->content[$row->NAME] = $row->CONTENT;
+					if(isJson($row->CONTENT))
+						$this->content[$row->NAME] = json_decode($row->CONTENT);
+					else
+						$this->content[$row->NAME] = $row->CONTENT;
 				}
 				return true;
 			}else
