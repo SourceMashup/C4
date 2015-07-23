@@ -12,12 +12,14 @@
 		public $content;
 		public $data;
 		public $url;
+		public $posts;
 		
 		function __construct($root)
 		{
 			include "_config.php";
         	$this->_dbConn = new mysqli($dbHost,$dbUser,$dbPass,$dbName);
         	$this->_root = $root;
+        	$this->posts = array();
 		}
 
 		public function dataExists()
@@ -28,6 +30,27 @@
 			{
 				$result = $result->fetch_object();
 				$this->data = json_decode($result->CONFIG);
+				return true;
+			}else
+				return false;
+		}
+
+		public function postsExist()
+		{
+			$DATA_TABLE = "POSTS";
+			$result = $this->_dbConn->query("SELECT * FROM " . $DATA_TABLE . ";");
+			if($result && $result->num_rows > 0)
+			{
+				while($row = $result->fetch_object())
+				{
+					$tmp_post = new _post();
+					$tmp_post->id = $row->ID;
+					$tmp_post->date = $row->DATE;
+					$tmp_post->data = json_decode($row->VARIABLES);
+					$tmp_post->content = $row->CONTENT;
+					array_push($this->posts,$tmp_post);
+				}
+				
 				return true;
 			}else
 				return false;
@@ -51,6 +74,7 @@
 					return true;
 				}
 			}
+			$url = substr($url, 0, strpos($url, "/?"));
 			$URL_TABLE = "URLS";
 			$temp_file = basename($url);
 			$temp_file = rtrim($temp_file,"/");
@@ -141,6 +165,17 @@
 		
 
 
+	}
+
+	/**
+	* 
+	*/
+	class _post
+	{
+		public $id;
+		public $data;
+		public $content;
+		public $date;
 	}
 
 ?>
