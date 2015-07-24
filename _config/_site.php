@@ -45,10 +45,10 @@
 				{
 					$tmp_post = new _post();
 					$tmp_post->id = $row->ID;
-					$tmp_post->date = $row->DATE;
+					$tmp_post->date = strtotime($row->DATE);
 					$tmp_post->data = json_decode($row->VARIABLES);
 					$tmp_post->content = $row->CONTENT;
-					array_push($this->posts,$tmp_post);
+					$this->posts[$row->ID] = $tmp_post;
 				}
 				
 				return true;
@@ -74,7 +74,7 @@
 					return true;
 				}
 			}
-			$url = substr($url, 0, strpos($url, "/?"));
+			$url = (strpos($url, "?")? substr($url, 0, strpos($url, "?")) : $url);
 			$URL_TABLE = "URLS";
 			$temp_file = basename($url);
 			$temp_file = rtrim($temp_file,"/");
@@ -92,11 +92,30 @@
 					$this->_page = $temp_file;
 				else
 					$this->_page = $temp_page;
+				$this->url = $url;
 				return true;
 			}else{
-				return false;
-			
+				$url = rtrim($url,"/");
+				$result = $this->_dbConn->query("SELECT * FROM " . $URL_TABLE . " WHERE URL = '" . $url . "' OR REFERENCE_URL = '" . $url . "' LIMIT 1;");
+				if($result && $result->num_rows > 0)
+				{
+
+					$temp_page = $result->fetch_object();
+					if(!empty($temp_page->REDIRECT_URL))
+					{
+						$url = $temp_page->REDIRECT_URL;
+						return $this->validateWebURL($url);
+					}
+					if(empty($temp_page->FILE))
+						$this->_page = $temp_file;
+					else
+						$this->_page = $temp_page;
+					$this->url = $url;
+					return true;
+				}
 			}
+
+			return false;
 		}
 
 		public function page(){
