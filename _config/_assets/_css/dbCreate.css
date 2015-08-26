@@ -132,13 +132,13 @@ msg:hover > span{
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: rgba(255, 255, 255, 0.31); 
+   color: rgba(255, 255, 255, 0.31);
    font-weight: 100;
 
 }
 
-:-ms-input-placeholder {  
-   color: rgba(255, 255, 255, 0.31);  
+:-ms-input-placeholder {
+   color: rgba(255, 255, 255, 0.31);
    font-weight: 100;
 
 }
@@ -153,5 +153,6 @@ h4{
 form{
 	width:400px;
 	margin: auto;
-
+	margin-top: 45px;
+	margin-bottom: 45px;
 }

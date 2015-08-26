@@ -13,17 +13,24 @@
 		public $data;
 		public $url;
 		public $posts;
-		
+		private $validStart;
+
 		function __construct($root)
 		{
-			include "_config.php";
-        	$this->_dbConn = new mysqli($dbHost,$dbUser,$dbPass,$dbName);
-        	$this->_root = $root;
-        	$this->posts = array();
+			$this->_root = $root;
+			$this->posts = array();
+			if((@include "_config.php") !== false){
+      	$this->_dbConn = new mysqli($dbHost,$dbUser,$dbPass,$dbName);
+				$this->validStart = true;
+			}else {
+				$this->validStart = false;
+			}
 		}
 
 		public function dataExists()
 		{
+			if($this->validStart == false)
+				return false;
 			$DATA_TABLE = "SITE";
 			$result = $this->_dbConn->query("SELECT * FROM " . $DATA_TABLE . " LIMIT 1;");
 			if($result && $result->num_rows > 0)
@@ -37,6 +44,8 @@
 
 		public function postsExist()
 		{
+			if($this->validStart == false)
+				return false;
 			$DATA_TABLE = "POSTS";
 			$result = $this->_dbConn->query("SELECT * FROM " . $DATA_TABLE . ";");
 			if($result && $result->num_rows > 0)
@@ -50,7 +59,7 @@
 					$tmp_post->content = $row->CONTENT;
 					$this->posts[$row->ID] = $tmp_post;
 				}
-				
+
 				return true;
 			}else
 				return false;
@@ -64,6 +73,7 @@
 
 		public function validateWebURL($url)
 		{
+
 			$this->url = $url;
 			if($url == "/dbCreate.php")
 			{
@@ -74,6 +84,8 @@
 					return true;
 				}
 			}
+			if($this->validStart == false)
+				return false;
 			$url = (strpos($url, "?")? substr($url, 0, strpos($url, "?")) : $url);
 			$URL_TABLE = "URLS";
 			$temp_file = basename($url);
@@ -159,6 +171,7 @@
 
 		private function buildFileName($filename,$dir)
 		{
+
 			if(mb_substr($filename, 0, 1) == DIRECTORY_SEPARATOR)
 			{
 				$filename = ltrim ($filename, DIRECTORY_SEPARATOR);
@@ -171,23 +184,25 @@
 				$file = $dir . DIRECTORY_SEPARATOR . $filename;
 			}
 
+
 			$file = $this->_root . DIRECTORY_SEPARATOR . $file;
 			if(file_exists($file . ".php"))
 				$file =  $file . ".php";
-			elseif (file_exists($file . ".html")) 
+			elseif (file_exists($file . ".html"))
 				$file = $file . ".html";
 			elseif (file_exists($file . ".htm"))
 				$file = $file . ".htm";
 
+
 			return $file;
 		}
-		
+
 
 
 	}
 
 	/**
-	* 
+	*
 	*/
 	class _post
 	{

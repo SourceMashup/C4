@@ -1,11 +1,10 @@
 <?php
-ini_set('display_errors', 1); 
+ini_set('display_errors', 1);
 
 $pageURL = $_SERVER["REQUEST_URI"];
 
 include '_config/_parser.php';
 include '_config/_site.php';
-
 
 $site = new site(__DIR__);
 $parser = new parser(__DIR__,$site);

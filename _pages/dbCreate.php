@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <link rel="stylesheet" href="/_config/_assets/_css/dbCreate.css">
 <title>Database Creator</title>
 <?php
@@ -23,13 +24,13 @@ function inputData($message){
 <div id='heading'><span></span><h1>Database Setup</h1></div>
 <h3>Before you start, we need some things from you</h3>
 <p>Please set up an empty Mysql database to use this software and we will take care of the rest!</p>
-<input type="textbox" name="dbname" value="" placeholder="Database Name">
+<input type="textbox" name="dbname" value="" placeholder="Database Name" autocomplete='off'>
 
 <input type="textbox" name="dbhost" value="localhost" placeholder="Database Host">
 
-<input type="textbox" name="dbuser" value="" placeholder="Database User Name">
+<input type="textbox" name="dbuser" value="" placeholder="Database User Name" autocomplete='off'>
 
-<input type="password" name="dbpass" value="" placeholder="Database Password">
+<input type="password" name="dbpass" value="" placeholder="Database Password" autocomplete='off'>
 
 <input type="submit" name="testdb" value="Submit">
 </form>
@@ -41,7 +42,7 @@ function inputData($message){
 if(isset($_POST['dbname']) && isset($_POST['dbhost']) && isset($_POST['dbuser']) && isset($_POST['dbpass']))
 {
 	$showForms = false;
-	
+
 	$goodParms=true;
 	$connStat=true;
 	if(empty($_POST['dbpass'])){
@@ -56,10 +57,10 @@ if(isset($_POST['dbname']) && isset($_POST['dbhost']) && isset($_POST['dbuser'])
 	if(empty($_POST['dbname'])){
 		$goodParms=false;
 	}
-	
-	
 
-	
+
+
+
 	if($goodParms){
 		$dbconn = new mysqli($_POST['dbhost'], $_POST['dbuser'], $_POST['dbpass'],$_POST['dbname']);
 		if(!$dbconn->connect_error)
@@ -75,7 +76,7 @@ if(isset($_POST['dbname']) && isset($_POST['dbhost']) && isset($_POST['dbuser'])
 
 
 			$drop_URLS_Table = "DROP TABLE IF EXISTS URLS;";
-		 	$create_URLS_Table = " 
+		 	$create_URLS_Table = "
 				CREATE TABLE URLS (
 	  				ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	  				URL VARCHAR(300) NOT NULL,
@@ -84,7 +85,7 @@ if(isset($_POST['dbname']) && isset($_POST['dbhost']) && isset($_POST['dbuser'])
 	  				LANDING_SITE TINYINT(1) NOT NULL DEFAULT '0',
 	  				FILE VARCHAR(300) DEFAULT NULL
 	  			)
-				
+
 			";
 
 			$drop_CONTENT_Table = "DROP TABLE IF EXISTS CONTENT;";
@@ -153,7 +154,7 @@ if(isset($_POST['dbname']) && isset($_POST['dbhost']) && isset($_POST['dbuser'])
 		$message = 0;
 		$showForms = true;
 	}
-	
+
 }
 
 
