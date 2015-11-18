@@ -62,3 +62,8 @@ echo $page->parm->title;
 ```
 
 Templates can be nested.  Example, you can have your page use a page template, which uses the default template.  
+
+
+##Additional
+This runs on PHP 5
+This also needs the Apache2 Mod_rewrite module as well as htaccess files enabled.  
