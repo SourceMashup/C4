@@ -1,7 +1,7 @@
 # C4
 A simple PHP development framework that works similariy to Jekyll
 
-Start by navigating to /dbCreate.php to add in mysql database information
+Start your server and navigate to the url `/dbCreate.php` to add in mysql database information
 
 ## How to use
 Create pages in the database in the __URLS__ table
